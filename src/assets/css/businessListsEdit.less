@@ -1,0 +1,61 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+#businessListsEdit {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  width: 80vw;
+  margin: auto;
+  margin-top: 10vh;
+  .operate {
+    text-align: left;
+    margin-bottom: 10px;
+    .saveBtn {
+      width: 70px;
+      background-color: #1890ff;
+    }
+    .cancelBtn  {
+      width: 70px;
+      background-color: #1890ff;
+    }
+  }
+  .headerDiv {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .ant-input-group-wrapper {
+      width: 400px;
+      margin-bottom: 10px;
+    }
+  }
+  .addField {
+    width: 140px;
+    margin-bottom: 10px;
+    background-color: #1890ff;
+  }
+  /deep/ .ant-table th {
+    text-align: center;
+  }
+  /deep/ .ant-table td {
+    text-align: center;
+    .addBtn {
+      width: 70px;
+    }
+    .removeBtn {
+      width: 70px;
+      color: red;
+    }
+    .isFillSelect {
+      width: 100px;
+    }
+    .isPrimarySelect {
+      width: 100px;
+    }
+    .fieldTypeSelect {
+      width: 100px;
+    }
+  }
+}

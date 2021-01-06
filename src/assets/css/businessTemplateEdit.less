@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+#businessTemplateEdit {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  width: 80vw;
+  margin: auto;
+  margin-top: 10vh;
+  .operate {
+    text-align: left;
+    margin-bottom: 10px;
+    .saveBtn {
+      width: 70px;
+      background-color: #1890ff;
+    }
+    .cancelBtn  {
+      width: 70px;
+      background-color: #1890ff;
+    }
+  }
+  .headerDiv {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .ant-input-group-wrapper {
+      width: 400px;
+      margin-bottom: 10px;
+    }
+    .ant-input-group {
+      display: flex;
+      flex-direction: row;
+      width: 400px;
+      margin-bottom: 10px;
+      input {
+        width: 70px;
+        color: #363636;
+      }
+      .ant-select {
+        width: 331px;
+      }
+    }
+  }
+  .addChildTableBtn {
+    width: 140px;
+    margin-bottom: 10px;
+    background-color: #1890ff;
+  }
+}
+/deep/ th {
+  text-align: center !important;
+}
+/deep/ td {
+  text-align: center !important;
+}

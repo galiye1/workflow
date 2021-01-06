@@ -5,6 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    processesShow: [],
+    processesExample: [],
+    businessTemplate: [],
+    businessLists: [],
+    businessListId: undefined,
+    businessTemplateId: undefined
   },
   mutations: {
   },
