@@ -35,8 +35,33 @@ export default {
       categorys: [
         { name: 'OA', id: 'oa' },
         { name: '财务', id: 'finance' }
-      ]
+      ],
+      processNameInputValue: '',
+      processId: this.$store.state.processId
     }
+  },
+  mounted () {
+    // window.addEventListener('beforeunload', () => {
+    //   sessionStorage.setItem('xml', JSON.stringify(this.xml))
+    // })
+    // if (sessionStorage.getItem('xml')) {
+    //   this.xml = sessionStorage.getItem('xml')
+    //   console.log(this.xml)
+    // }
+    this.$axios.processDataEcho(this.processId).then(res => {
+      if (typeof (res.data) != 'undefined') {
+        this.processNameInputValue = res.data.processName
+        this.xml = res.data.processXML
+      }
+      setTimeout(() => {
+        const formChildNodes = document.getElementsByTagName('form')[0].childNodes
+        const processInputNode = (((formChildNodes[2].childNodes)[1].childNodes)[0].childNodes)[1]
+        processInputNode.value = this.processNameInputValue
+        processInputNode.oninput = function (e) {
+          this.processNameInputValue = processInputNode.value
+        }
+      }, 100)
+    })
   },
   methods: {
     getModelDetail () {
@@ -44,7 +69,16 @@ export default {
       // this.xml = response.xml
     },
     save (data) {
-      console.log(data) // { process: {...}, xml: '...', svg: '...' }
+      // console.log(data) // { process: {...}, xml: '...', svg: '...' }
+      this.xml = data.xml
+      this.$axios.processDataSave({
+        processName: this.processNameInputValue,
+        processXML: this.xml
+      }).then(res => {
+        this.$router.push({
+          path: '/'
+        })
+      })
     }
   }
 }

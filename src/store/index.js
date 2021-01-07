@@ -9,8 +9,9 @@ export default new Vuex.Store({
     processesExample: [],
     businessTemplate: [],
     businessLists: [],
-    businessListId: undefined,
-    businessTemplateId: undefined
+    businessListId: null,
+    businessTemplateId: null,
+    processId: null
   },
   mutations: {
   },

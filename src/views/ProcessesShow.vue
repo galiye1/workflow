@@ -32,8 +32,8 @@
       <a-layout-content :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }">
         <a-button class="addBtn"><router-link to="/processDesign">新增</router-link></a-button>
         <a-table :data-source="processesShow" :columns="columns" :scroll="{ y: 1002 | true }">
-          <template slot="operation" slot-scope="">
-            <a-button class="processDesignBtn">流程设计</a-button>
+          <template slot="operation" slot-scope="text, record">
+            <a-button class="processDesignBtn" @click="processEditClick(record.processId)">流程设计</a-button>
             <a-button class="removeBtn">删除</a-button>
           </template>
         </a-table>
@@ -67,7 +67,19 @@ export default {
         }
       ],
       current: ['1'], // 当前侧边栏选择项
-      processesShow: [] // 流程展示数据
+      processesShow: []
+      // processesShow: [
+      //   {
+      //     processId: 1,
+      //     processName: '请假流程',
+      //     createTime: '2021-1-6'
+      //   },
+      //   {
+      //     processId: 2,
+      //     processName: '报销流程',
+      //     createTime: '2021-1-6'
+      //   }
+      // ] // 流程展示数据
     }
   },
   mounted () { // 向后端请求流程展示数据
@@ -79,6 +91,9 @@ export default {
     })
   },
   methods: {
+    processEditClick (key) {
+      this.$store.state.processId = key
+    }
   }
 }
 </script>

@@ -17,12 +17,12 @@ const serve = {
     })
   },
   businessTemplateShow () {
-    return axios('/businessLists/showBusinessLists', {
+    return axios('businessTemplates/showBusinessTemplates', {
       method: 'get'
     })
   },
   businessListsShow () {
-    return axios('/businessTemplates/showBusinessTemplates', {
+    return axios('businessLists/showBusinessLists', {
       method: 'get'
     })
   },
@@ -62,10 +62,9 @@ const serve = {
       data
     })
   },
-  businessListRemove (data) {
-    return axios('/businessLists/removeBusinessList', {
-      method: 'delete',
-      data
+  businessListRemove (id) {
+    return axios(`/businessLists/removeBusinessList?businessListId=${id}`, {
+      method: 'delete'
     })
   },
   businessTemplateDataEcho (data) {

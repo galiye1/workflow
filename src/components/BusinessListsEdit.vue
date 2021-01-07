@@ -8,6 +8,7 @@
       <a-input v-model="businessListName" addon-before="名称" placeholder="请输入名称"/>
       <a-input v-model="businessListDescription" addon-before="描述" placeholder="请输入描述"/>
       <a-input v-model="businessListDatabaseName" addon-before="数据库表名" placeholder="请输入数据库表名"/>
+      <span class="rule">*数据库表名不能为数字和汉字</span>
     </div>
     <a-button class="addField" @click="addField">添加字段</a-button>
     <a-table :data-source="fieldTable" :columns="columns" :scroll="{ y: 1002 | true }" :pagination="false">
@@ -134,11 +135,11 @@ export default {
       ],
       fieldTypeOptions: [ // 数据类型select选项
         {
-          value: 'number',
+          value: 'java.lang.Integer',
           label: 'Number'
         },
         {
-          value: 'string',
+          value: 'java.lang.String',
           label: 'String'
         },
         {
@@ -159,7 +160,7 @@ export default {
   },
   mounted () { // 数据回显
     this.$axios.businessListsDataEcho(this.businessListId).then((res) => {
-      if (typeof (res.data) != 'undefined') {
+      if (typeof (res.data) !== 'undefined') {
         this.fieldTable = res.data.fieldEntityVos
         this.businessListName = res.data.businessListName
         this.businessListDescription = res.data.businessListDescription
@@ -210,7 +211,11 @@ export default {
       this.isFillValue = value
     },
     isPrimaryKeyValueChange (value) { // 主键select值处理
-      this.isPrimaryKeyValue = value
+      if (value == '是') {
+        this.isPrimaryKeyValue = 1
+      } else {
+        this.isPrimaryKeyValue = 0
+      }
     },
     fieldTypeValueChange (value) { // 数据类型select值处理
       this.fieldTypeValue = value
@@ -223,8 +228,10 @@ export default {
         businessListId: this.businessListId,
         businessListName: this.businessListName,
         businessListDescription: this.businessListDescription,
-        businessListTable: this.businessListTable,
-        field: this.fieldTable
+        businessListTable: this.businessListDatabaseName,
+        fieldEntityVos: this.fieldTable
+      }).then(res => {
+        this.$router.push({ path: '/businessLists' })
       })
     },
     cancel () { // 取消当前数据编辑

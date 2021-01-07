@@ -31,10 +31,10 @@
       </a-layout-header>
       <a-layout-content :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }">
         <a-button class="addBtn"><router-link to="/businessListsEdit">新增</router-link></a-button>
-        <a-table :data-source="businessLists" :columns="columns" :scroll="{ y: 1002 | true }">
+        <a-table :data-source="businessLists" :columns="columns" :scroll="{ y: 1002 | true }" :pagination="false">
           <template slot="operation" slot-scope="text, record">
             <a-button class="editBtn" @click="pushBusinessListId(record.businessListId - 1)"><router-link to="/businessListsEdit">编辑</router-link></a-button>
-            <a-button class="removeBtn">删除</a-button>
+            <a-button class="removeBtn" @click="removeClick(record.businessListId)">删除</a-button>
           </template>
         </a-table>
       </a-layout-content>
@@ -50,15 +50,15 @@ export default {
       columns: [
         {
           title: '表id',
-          dataIndex: 'tableId'
+          dataIndex: 'businessListId'
         },
         {
           title: '表名',
-          dataIndex: 'tableName'
+          dataIndex: 'businessListName'
         },
         {
           title: '描述',
-          dataIndex: 'description'
+          dataIndex: 'businessListDescription'
         },
         {
           title: '操作',
@@ -67,12 +67,24 @@ export default {
         }
       ],
       current: ['4'], // 当前侧边栏选择项
-      businessLists: [] // 业务列表数据
+      businessLists: []
+      // businessLists: [
+      //   {
+      //     businessListId: 1,
+      //     businessListName: 'a',
+      //     businessListDescription: 'b'
+      //   },
+      //   {
+      //     businessListId: 2,
+      //     businessListName: 'cc',
+      //     businessListDescription: 'd'
+      //   }
+      // ] // 业务列表数据
     }
   },
   mounted () { // 向后端请求业务列表数据
     this.$axios.businessListsShow().then((res) => {
-      if (typeof (res.data) != 'undefined') {
+      if (typeof (res.data) !== 'undefined') {
         this.businessLists = res.data
         this.$store.state.businessLists = JSON.parse(JSON.stringify(this.businessLists))
       }
@@ -81,6 +93,11 @@ export default {
   methods: {
     pushBusinessListId (key) { // 保存当前编辑业务id
       this.$store.state.businessListId = key
+    },
+    removeClick (key) {
+      this.$axios.businessListRemove(key).then(res => {
+        location.reload()
+      })
     }
   }
 }
